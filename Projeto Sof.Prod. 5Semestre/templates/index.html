@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Lista de Compras</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Lista Atual</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for produto in produtos %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge badge-primary">{{ produto.categoria }}</span>
+                                    {{ produto.nome }}
+                                    <span class="badge badge-light">R$ {{ produto.preco }}</span>
+                                    <button class="btn btn-sm btn-danger" onclick="removerProduto({{ produto.id }})">Excluir</button>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Adicionar Produto</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="/cadastro" method="post">
+                                <div class="form-group">
+                                    <label for="nome">Nome:</label>
+                                    <input type="text" id="nome" name="nome" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="categoria">Categoria:</label>
+                                    <select id="categoria" name="categoria" class="form-control">
+                                        <option value="Mercado">Mercado</option>
+                                        <option value="Hortifruti">Hortifruti</option>
+                                        <option value="Açougue">Açougue</option>
+                                        <option value="Produtos de limpeza">Produtos de limpeza</option>
+                                        <option value="Itens para casa">Itens para casa</option>
+                                        <option value="Diversos">Diversos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="preco">Preço:</label>
+                                    <input type="decimal" id="preco" name="preco" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Adicionar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
