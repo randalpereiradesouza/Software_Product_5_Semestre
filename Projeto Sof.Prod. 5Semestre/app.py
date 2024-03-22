@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from decimal import Decimal
 
@@ -12,6 +12,11 @@ class Produto(db.Model):
     nome = db.Column(db.String(255))
     categoria = db.Column(db.String(255))
     preco = db.Column(db.Float)
+
+
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
 
 
 @app.route('/')
@@ -33,11 +38,10 @@ def cadastro():
     return render_template('cadastro.html')
 
 
-@app.route('/historico')
+@app.route('/filtrar')
 def historico():
-    # TODO: Implementar a lógica para mostrar o histórico de inclusões
-    return 'Histórico de inclusões (a implementar)'
-
+    # TODO: Implementar a lógica para filtra itens por categoria 
+    return 'Filtro por categoria (a implementar)'
 
 @app.route('/atualizar')
 def atualizar():
@@ -45,10 +49,12 @@ def atualizar():
     return 'Valor atualizado (a implementar)'
 
 
-@app.route('/deletar')
-def deletar():
-    # TODO: Implementar a lógica para mostrar o histórico de inclusões
-    return 'Deletar um produto da lista, mas não do histórico (a implementar)'
+@app.route('/deletar/<int:produto_id>', methods=['DELETE'])
+def deletar_produto(produto_id):
+    produto = Produto.query.get_or_404(produto_id)
+    db.session.delete(produto)
+    db.session.commit()
+    return jsonify({'message': 'Produto excluído com sucesso'}), 200
 
 
 if __name__ == '__main__':
