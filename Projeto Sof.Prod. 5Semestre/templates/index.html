@@ -14,6 +14,7 @@
     <header>
         <h1>Lista de Compras</h1>
     </header>
+    <img src="{{ url_for('static', filename='img/fotofundo.jpg') }}" alt="imagem de fundo">
     <main>
         <div class="container">
             <div class="row">
@@ -23,47 +24,80 @@
                             <h5 class="card-title">Lista Atual</h5>
                         </div>
                         <div class="card-body">
-                            <ul class="list-group">
-                                {% for produto in produtos %}
-                                <li id="produto_{{ produto.id }}" class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span class="badge badge-primary">{{ produto.categoria }}</span>
-                                    {{ produto.nome }}
-                                    <span class="badge badge-light">R$ {{ produto.preco }}</span>
-                                    <button class="btn btn-sm btn-danger" onclick="removerProduto({{ produto.id }})">Excluir</button>
-                                </li>
-                                {% endfor %}
-                            </ul>
+                            {% if not produtos %}
+                                <p>Não há itens a serem mostrados.</p>
+                            {% else %}
+                                <ul class="list-group">
+                                    {% for produto in produtos %}
+                                    <li id="produto_{{ produto.id }}" class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span class="badge badge-primary">{{ produto.categoria }}</span>
+                                        {{ produto.nome }}
+                                        <span class="badge badge-light">R$ {{ "%0.2f"|format(produto.preco) }}</span>
+                                        <button class="btn btn-sm btn-danger" onclick="removerProduto({{ produto.id }})">Excluir</button>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                     </div>
-                </div>
+                    </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Adicionar Produto</h5>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Adicionar Produto</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/cadastro" method="post">
+                                        <div class="form-group">
+                                            <label for="nome">Nome:</label>
+                                            <input type="text" id="nome" name="nome" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="categoria">Categoria:</label>
+                                            <select id="categoria" name="categoria" class="form-control">
+                                                <option value="Mercado">Mercado</option>
+                                                <option value="Hortifruti">Hortifruti</option>
+                                                <option value="Açougue">Açougue</option>
+                                                <option value="Produtos de limpeza">Produtos de limpeza</option>
+                                                <option value="Itens para casa">Itens para casa</option>
+                                                <option value="Diversos">Diversos</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="preco">Preço:</label>
+                                            <input type="decimal" id="preco" name="preco" class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <form action="/cadastro" method="post">
-                                <div class="form-group">
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" id="nome" name="nome" class="form-control">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Filtrar por Categoria</h5>
                                 </div>
-                                <div class="form-group">
-                                    <label for="categoria">Categoria:</label>
-                                    <select id="categoria" name="categoria" class="form-control">
-                                        <option value="Mercado">Mercado</option>
-                                        <option value="Hortifruti">Hortifruti</option>
-                                        <option value="Açougue">Açougue</option>
-                                        <option value="Produtos de limpeza">Produtos de limpeza</option>
-                                        <option value="Itens para casa">Itens para casa</option>
-                                        <option value="Diversos">Diversos</option>
-                                    </select>
+                                <div class="card-body">
+                                    <form action="/filtrar" method="post">
+                                        <div class="form-group">
+                                            <label for="filtroCategoria">Categoria:</label>
+                                            <select id="categoria" name="categoria" class="form-control">
+                                                <option value="">Selecione...</option>
+                                                <option value="Mercado">Mercado</option>
+                                                <option value="Hortifruti">Hortifruti</option>
+                                                <option value="Açougue">Açougue</option>
+                                                <option value="Produtos de limpeza">Produtos de limpeza</option>
+                                                <option value="Itens para casa">Itens para casa</option>
+                                                <option value="Diversos">Diversos</option>
+                                                <option value="Todos">Todos</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                                    </form>
                                 </div>
-                                <div class="form-group">
-                                    <label for="preco">Preço:</label>
-                                    <input type="decimal" id="preco" name="preco" class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Adicionar</button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

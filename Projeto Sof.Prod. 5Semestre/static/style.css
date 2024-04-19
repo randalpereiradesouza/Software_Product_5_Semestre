@@ -1,15 +1,50 @@
+/* Estilos para elementos gerais */
 body {
-    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
+/* Estilizando o cabeçalho */
+header {
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Estilos para o título "Lista de Compras" */
+header h1 {
+    margin: 0; /* Removendo margem */
+}
+
+/* Estilos para o conteúdo principal */
+main {
+    padding: 50px 20px; /* Aumentando o espaçamento acima e abaixo do conteúdo principal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Alinhando os elementos em coluna */
+}
+
+/* Estilos para os cartões */
 .card {
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* Aumentando a margem inferior dos cartões */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-.list-group-item {
-    cursor: pointer;
-}
-
-.list-group-item:hover {
-    background-color: #f0f0f0;
+/* Estilos para a imagem de fundo */
+img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
 }

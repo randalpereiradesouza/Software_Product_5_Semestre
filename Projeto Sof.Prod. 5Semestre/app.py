@@ -38,10 +38,20 @@ def cadastro():
     return render_template('cadastro.html')
 
 
-@app.route('/filtrar')
-def historico():
-    # TODO: Implementar a lógica para filtra itens por categoria 
-    return 'Filtro por categoria (a implementar)'
+@app.route('/filtrar', methods=['POST'])
+def filtrar_por_categoria():
+    categoria_selecionada = request.form.get('categoria')
+    if categoria_selecionada == 'Todos':  # Se nenhum filtro for selecionado, retorna todos os produtos
+        produtos_filtrados = Produto.query.all()
+    else:
+        produtos_filtrados = Produto.query.filter_by(categoria=categoria_selecionada).all()
+    
+    mensagem = None
+    if not produtos_filtrados:  # Verificamos se a lista de produtos filtrados está vazia
+        mensagem = f'Não há produtos na categoria: "{categoria_selecionada}"'
+    
+    return render_template('index.html', produtos=produtos_filtrados, mensagem=mensagem)
+
 
 @app.route('/atualizar')
 def atualizar():

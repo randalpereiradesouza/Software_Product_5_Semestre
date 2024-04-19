@@ -15,3 +15,7 @@ function removerProduto(id) {
         }
     });
 }
+function filtrarPorCategoria() {
+    var categoriaSelecionada = document.getElementById("filtroCategoria").value;
+    window.location.href = "/filtrar?categoria=" + categoriaSelecionada;
+}
