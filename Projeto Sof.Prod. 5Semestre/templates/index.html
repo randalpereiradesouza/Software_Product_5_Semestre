@@ -33,6 +33,7 @@
                                         <span class="badge badge-primary">{{ produto.categoria }}</span>
                                         {{ produto.nome }}
                                         <span class="badge badge-light">R$ {{ "%0.2f"|format(produto.preco) }}</span>
+                                        <button class="btn btn-sm btn-warning" onclick="abrirModalAtualizar({{ produto.id }})">Atualizar</button>
                                         <button class="btn btn-sm btn-danger" onclick="removerProduto({{ produto.id }})">Excluir</button>
                                     </li>
                                     {% endfor %}
@@ -97,6 +98,47 @@
                                         <button type="submit" class="btn btn-primary">Filtrar</button>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- Modal de Atualização de Produto -->
+                        <div class="modal fade" id="modalAtualizar" tabindex="-1" role="dialog" aria-labelledby="modalAtualizarLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalAtualizarLabel">Atualizar Produto</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formAtualizarProduto">
+                                            <input type="hidden" id="produtoId" name="produtoId">
+                                            <div class="form-group">
+                                                <label for="nomeAtualizado">Nome:</label>
+                                                <input type="text" id="nomeAtualizado" name="nomeAtualizado" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="categoriaAtualizada">Categoria:</label>
+                                                <select id="categoriaAtualizada" name="categoriaAtualizada" class="form-control">
+                                                    <option value="Mercado">Mercado</option>
+                                                    <option value="Hortifruti">Hortifruti</option>
+                                                    <option value="Açougue">Açougue</option>
+                                                    <option value="Produtos de limpeza">Produtos de limpeza</option>
+                                                    <option value="Itens para casa">Itens para casa</option>
+                                                    <option value="Diversos">Diversos</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="precoAtualizado">Preço:</label>
+                                                <input type="decimal" id="precoAtualizado" name="precoAtualizado" step="0.01" class="form-control">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" onclick="atualizarProduto()">Salvar Alterações</button>
+                                    </div>
+                                </div>  
                             </div>
                         </div>
                     </div>
